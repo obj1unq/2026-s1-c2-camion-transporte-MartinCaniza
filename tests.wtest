@@ -96,5 +96,9 @@ describe "camion de transporte"{
     
         assert.equals(#{bateriaAntiaerea}, camion.cosasConMayorNivelDePeligrosidad(15) ) 
         assert.equals(#{bateriaAntiaerea}, camion.cosasConNivelDePeligrosidadMayorA(bumblebee) )
+        assert.equals(#{bateriaAntiaerea, knightRider}, camion.cosasConMayorNivelDePeligrosidad(2) )
+        assert.equals(#{bateriaAntiaerea, knightRider}, camion.cosasConNivelDePeligrosidadMayorA(paqueteDeLadrillos) )
+        assert.equals(#{}, camion.cosasConMayorNivelDePeligrosidad(200) )
+        assert.equals(#{}, camion.cosasConNivelDePeligrosidadMayorA(residuosRadioactivos) ) 
     }
 }
