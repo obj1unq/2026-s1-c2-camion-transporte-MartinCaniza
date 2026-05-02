@@ -40,6 +40,8 @@ object bumblebee{
 	 }
 
 	method estaTransformado() { return modoActual.estaTransformado() }
+
+	method totalBultos() { return 2 }
 }
 
 
@@ -174,4 +176,6 @@ object embalajeDeSeguridad{
 	method embalar(_cosa) {
 		cosa = _cosa
 	}
+
+	method totalBultos() { return 2 + cosa.totalBultos() }
 }
