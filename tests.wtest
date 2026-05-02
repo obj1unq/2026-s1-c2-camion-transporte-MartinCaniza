@@ -1,5 +1,6 @@
 import camion.*
 import cosas.*
+import almacen.*
 
 
 describe "camion de transporte"{
@@ -244,5 +245,84 @@ describe "camion de transporte"{
         assert.equals(45, residuosRadioactivos.peso())
         assert.equals(0, paqueteDeLadrillos.cantidadLadrillos())
         assert.notThat(bateriaAntiaerea.tieneMisiles())
+    }
+
+    test"almacenar transporte: caso exitoso ruta9"{
+        almacen.almacenar(knightRider)
+        almacen.almacenar(residuosRadioactivos)
+
+        arenaAGranel.peso(50)
+        bumblebee.modoActual(auto)
+        camion.cargar(bumblebee)
+        camion.cargar(arenaAGranel)
+
+        camion.transportar(almacen, ruta9)
+
+        assert.that( almacen.almacen().contains(knightRider))
+        assert.that( almacen.almacen().contains(residuosRadioactivos) )
+        assert.that( almacen.almacen().contains(bumblebee) )
+        assert.that( almacen.almacen().contains(arenaAGranel) )
+        
+        assert.that(camion.cosas().isEmpty())
+
+
+    }
+
+    test"almacenar transporte: caso fallido ruta9 "{
+        almacen.almacenar(knightRider)
+        almacen.almacenar(residuosRadioactivos)
+
+        bumblebee.modoActual(robot)
+        camion.cargar(bumblebee)
+        arenaAGranel.peso(50)
+        camion.cargar(arenaAGranel)
+
+        assert.throwsException({camion.transportar(almacen, ruta9)})
+        assert.that( almacen.almacen().contains(knightRider))
+        assert.that( almacen.almacen().contains(residuosRadioactivos) )
+
+        assert.that(camion.cosas().contains(bumblebee) )
+        assert.that(camion.cosas().contains(arenaAGranel) )
+
+    }
+
+    test"almacenar transporte: caso exitoso caminosVecinales"{
+        caminosVecinales.pesoPermitido(2000)
+        almacen.almacenar(knightRider)
+        almacen.almacenar(residuosRadioactivos)
+
+        bumblebee.modoActual(auto)
+        camion.cargar(bumblebee)
+        arenaAGranel.peso(50)
+        camion.cargar(arenaAGranel)
+
+        camion.transportar(almacen, caminosVecinales)
+
+        assert.that( almacen.almacen().contains(knightRider))
+        assert.that( almacen.almacen().contains(residuosRadioactivos) )
+        assert.that( almacen.almacen().contains(bumblebee) )
+        assert.that( almacen.almacen().contains(arenaAGranel) )
+        
+        assert.that(camion.cosas().isEmpty())
+
+    }
+
+    test "almacenar transporte: caso fallido caminosVecinales"{
+        caminosVecinales.pesoPermitido(300)
+        almacen.almacenar(knightRider)
+        almacen.almacenar(residuosRadioactivos)
+
+        bumblebee.modoActual(auto)
+        camion.cargar(bumblebee)
+        arenaAGranel.peso(50)
+        camion.cargar(arenaAGranel)
+
+        assert.throwsException({camion.transportar(almacen, caminosVecinales)})
+        
+        assert.that( almacen.almacen().contains(knightRider))
+        assert.that( almacen.almacen().contains(residuosRadioactivos) )
+
+        assert.that(camion.cosas().contains(bumblebee) )
+        assert.that(camion.cosas().contains(arenaAGranel) )
     }
 }

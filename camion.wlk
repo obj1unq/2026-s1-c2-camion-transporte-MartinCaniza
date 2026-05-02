@@ -1,5 +1,5 @@
 import cosas.*
-
+import almacen.*
 object camion {
 	const property cosas = #{}
 
@@ -76,5 +76,17 @@ object camion {
 
 	method accidentar(){
 		cosas.forEach({ cosa => cosa.accidentar() })
+	}
+
+	method transportar(destino,camino ){
+		if ( camino.puedeCircular(self) ){
+			self.descargarTodo(destino)
+			
+		} else{ self.error("No se puede ir al destino por el camino.")}
+
+	}
+	method descargarTodo(almacen){
+		cosas.forEach({ cosa => almacen.almacenar(cosa) })
+		cosas.clear()
 	}
 }
