@@ -53,4 +53,28 @@ object camion {
 	method cosasConNivelDePeligrosidadMayorA(cosa){
 		return self.cosasConMayorNivelDePeligrosidad(  cosa.nivelPeligrosidad() )
 	}
+
+	method puedeCircular(nivel){
+		return not self.estaExcedido() && self.cosasConMayorNivelDePeligrosidad(nivel).isEmpty()
+	}
+
+	method tieneAlgoQuePesaEntre(pesoMin, pesoMax){
+		return cosas.any({ cosa => cosa.peso() >= pesoMin && cosa.peso() <= pesoMax })
+	}
+
+	method cosaMasPesada(){
+		return cosas.max({ cosa => cosa.peso() }) //deberia lanzar un error si no hay cosas?
+	}
+
+	method pesos(){
+		return cosas.map({ cosa => cosa.peso() })
+	}
+
+	method totalBultos(){
+		return cosas.sum({ cosa => cosa.totalBultos() })
+	}
+
+	method accidentar(){
+
+	}
 }
