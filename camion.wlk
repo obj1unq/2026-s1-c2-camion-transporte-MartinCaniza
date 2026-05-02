@@ -75,6 +75,6 @@ object camion {
 	}
 
 	method accidentar(){
-
+		cosas.forEach({ cosa => cosa.accidentar() })
 	}
 }

@@ -2,6 +2,7 @@ object knightRider {
 	method peso() { return 500 }
 	method nivelPeligrosidad() { return 10 }
 	method totalBultos() { return 1 }
+	method accidentar(){}
 }
 
 
@@ -19,6 +20,8 @@ object arenaAGranel {
 
 	method nivelPeligrosidad() { return 1 }
 	method totalBultos() { return 1 }
+
+	method accidentar(){ self.peso( peso + 20)}
 }
 
 object bumblebee{
@@ -28,6 +31,8 @@ object bumblebee{
 	method modoActual(_modoActual){
 		modoActual = _modoActual
 	}
+
+	method modoActual() { return modoActual }
 
 	method cambiarTransformacion(){
 		modoActual = modoActual.transformacionOpuesta()
@@ -42,17 +47,19 @@ object bumblebee{
 	method estaTransformado() { return modoActual.estaTransformado() }
 
 	method totalBultos() { return 2 }
+
+	method accidentar(){ self.cambiarTransformacion() }
 }
 
 
 object auto{ //el nombre debería ser mas especifico? como: autoDeBumblebee?. O lo esperado es que se modele de otra forma? 
-	method transormacionOpuesta(){ return robot }
+	method transformacionOpuesta(){ return robot }
 	method estaTransformado(){ return true }
 	method nivelDePeligrosidad() { return 15 }
 }
 
 object robot{ //misma duda que con auto
-	method transormacionOpuesta(){ return auto }
+	method transformacionOpuesta(){ return auto }
 	method estaTransformado(){ return false }
 	method nivelDePeligrosidad() { return 30 }
 }
@@ -81,7 +88,14 @@ object paqueteDeLadrillos{
 		 		}
 				else{3}
 	}
-
+	method accidentar(){
+		return if (cantidadLadrillos > 12){
+			cantidadLadrillos = cantidadLadrillos - 12
+		}
+		else{
+			cantidadLadrillos = 0
+		}
+	}
 }
 
 
@@ -120,6 +134,12 @@ object bateriaAntiaerea{
 		}
 
 	}
+
+	method accidentar(){
+		if (tieneMisiles) {
+			tieneMisiles = false
+		}
+	}
 }
 
 
@@ -134,6 +154,8 @@ object residuosRadioactivos{
 
 	method nivelPeligrosidad() { return 200 }
 	method totalBultos() { return 1 }
+
+	method accidentar(){ self.peso( peso + 15)}
 }
 	
 object contenedorPortuario{
@@ -162,6 +184,10 @@ object contenedorPortuario{
 	method totalBultos(){
 		return 1 + cosas.sum({ cosa => cosa.totalBultos() })
 	}
+
+	method accidentar(){
+		cosas.forEach({ cosa => cosa.accidentar() })
+	}
 }
 
 object embalajeDeSeguridad{
@@ -178,4 +204,7 @@ object embalajeDeSeguridad{
 	}
 
 	method totalBultos() { return 2 + cosa.totalBultos() }
+
+	method accidentar(){}
+
 }
